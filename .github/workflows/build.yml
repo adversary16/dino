@@ -31,11 +31,24 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:gnome-44
       options: --privileged
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true
+      - run: flatpak repair --user
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.1
         with:
           manifest-path: im.dino.Dino.json
-          build-bundle: false
+          build-bundle: true
+      - name: release
+        uses: actions/create-release@v1
+        # if: contains('cicd', github.ref_name)
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: 'test'
+          # body_path: CHANGELOG.md
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
