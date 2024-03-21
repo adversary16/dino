@@ -28,8 +28,14 @@ jobs:
         #       # body_path: CHANGELOG.md
         #     env:
         #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          - name: Git describe
+            if: ${{ github.ref_type == 'tag' }}
+            id: ghd
+            uses: proudust/gh-describe@v2
+            with:
+             default: ''
           - name: Release Dino installer
-            # if: ${{ github.ref_type == 'tag' }}
+            if: ${{ github.ref_type == 'tag' }}
             uses: svenstaro/upload-release-action@2.9.0
             with:
                 repo_token: ${{ secrets.GITHUB_TOKEN }}
