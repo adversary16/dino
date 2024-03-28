@@ -43,7 +43,7 @@ jobs:
         - name: Git describe
           if: ${{ github.ref_type == 'tag' }}
           id: ghd
-          uses: proudust/gh-describe@v2
+          uses: proudust/gh-describe@v1
           with:
             default: ''
         - name: Release Dino installer
