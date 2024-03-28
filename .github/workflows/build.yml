@@ -43,7 +43,7 @@ jobs:
         - name: Git describe
           if: ${{ github.ref_type == 'tag' }}
           run: |
-            echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
+            echo "FLATPAK_BUILD_TAG=$(git describe --tags)" >> $GITHUB_OUTPUT
           id: ghd
         #   uses: proudust/gh-describe@v1
         #   with:
@@ -56,4 +56,4 @@ jobs:
               file: app.flatpak
               asset_name: app.flatpak
               tag: ${{ github.ref }}
-              release_name: Dino ${{ steps.ghd.outputs.tag }}
+              release_name: Dino ${{ steps.ghd.outputs.FLATPAK_BUILD_TAG }}
